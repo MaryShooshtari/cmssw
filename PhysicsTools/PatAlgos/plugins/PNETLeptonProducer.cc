@@ -108,6 +108,15 @@ void PNETLeptonProducer<LeptonType>::produce(edm::Event &iEvent, const edm::Even
       auto outputs = globalCache()->run(input_names_, data_, input_shapes_)[0];
       // std::cout<<"outputs.size(): "<<outputs.size()<<std::endl;
       // std::cout<<"flav_names_.size(): "<<flav_names_.size()<<std::endl;
+      //std::cout << "[DEBUG] outputs.size() = " << outputs.size() << std::endl;
+      //std::cout << "[DEBUG] flav_names_.size() = " << flav_names_.size() << std::endl;
+      
+      //for (size_t i = 0; i < outputs.size(); ++i) {
+      //    std::cout << "[DEBUG] output[" << i << "] = " << outputs[i] << std::endl;
+      //}
+      //for (size_t i = 0; i < flav_names_.size(); ++i) {
+      //    std::cout << "[DEBUG] flav_name[" << i << "] = " << flav_names_[i] << std::endl;
+      //}
       assert(outputs.size() == flav_names_.size());
       for (unsigned int iflav = 0; iflav < flav_names_.size(); ++iflav) {
         mvaScores[iflav][ilep] = outputs.at(iflav);

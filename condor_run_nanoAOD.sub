@@ -1,0 +1,20 @@
+executable          = condor_run_nanoAOD.sh
+arguments           = $(Process) $(inputfile) 
+output              = /user/mshoosht/condor/output/NanoProc.$(ClusterId).$(ProcId).out
+error               = /user/mshoosht/condor/error/NanoProc.$(ClusterId).$(ProcId).err
+log                 = /user/mshoosht/condor/logs/NanoProc.$(ClusterId).log
+
+# must have Singularity
+Requirements      = HAS_SINGULARITY == True
+
++SingularityImage = "cmssw-el8"
++SingularityBind  = "/cvmfs,/etc/grid-security"
+
+# Send the job to Held state on failure.
+on_exit_hold = (ExitBySignal == True) || (ExitCode != 0)
+
+# Periodically retry the jobs every 10 minutes, up to a maximum of 5 retries.
+periodic_release =  (NumJobStarts < 3) && ((CurrentTime - EnteredCurrentStatus) > 600)
+
+# one job per line in inputfiles.txt
+queue inputfile from inputfiles.txt

@@ -4,8 +4,11 @@ output              = /user/mshoosht/condor/output/NanoProc.$(ClusterId).$(ProcI
 error               = /user/mshoosht/condor/error/NanoProc.$(ClusterId).$(ProcId).err
 log                 = /user/mshoosht/condor/logs/NanoProc.$(ClusterId).log
 
-# must have Singularity
-Requirements      = HAS_SINGULARITY == True
+# Required for remote HTCondor-CE submission                                                                    
+#universe = grid
+use_x509userproxy = true
+x509userproxy = /user/mshoosht/x509up_u23259 
+#grid_resource = condor testumd-htcondorce.iihe.ac.be testumd-htcondorce.iihe.ac.be:9619
 
 +SingularityImage = "cmssw-el8"
 +SingularityBind  = "/cvmfs,/etc/grid-security"
